@@ -19,7 +19,7 @@ import CustomerDashboard from '../CustomerDashboard/CustomerDashboard';
 import LabDashboard from '../LabDashboard/LabDashboard';
 import Manage from '../ManageCustomers/Manage';
 import ShippingInfo from '../ShippingInfo/ShippingInfo';
-
+import Forgot from '../ForgotPassword/Forgot';
 import './App.css';
 import { CssBaseline } from '@material-ui/core';
 
@@ -75,6 +75,9 @@ function App() {
 
           <Route path="/summary">
             <Summary />
+          </Route>
+          <Route path="/reset">
+            <Forgot />
           </Route>
         </Switch>
         <Footer />

@@ -34,6 +34,17 @@ function LoginPage() {
       >
         Register
         </Button>
+        <Button
+        style={{
+          backgroundColor: '#1e565c',
+          color: 'white',
+        }}
+        onClick={() => {
+          history.push('/reset');
+        }}
+      >
+        Reset Password
+        </Button>
 
     </center>
   );
