@@ -76,6 +76,8 @@ function AddSample() {
 
       return;
     }; // end required field check
+    //swal has blank space to allow icon success
+    swal("", "Order successfully saved", "success");
     history.push('/shipping');
   
   }; // end shipping
@@ -121,13 +123,6 @@ function AddSample() {
         swal("Your order is safe!");
       }
     });
-    
-
-   
- 
-
-  
-
   }; // end cancel
 
   function focusChange (val) {

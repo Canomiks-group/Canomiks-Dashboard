@@ -33,7 +33,7 @@ function ShippingInfo() {
 
     if (!shippedDate || !carrierName || !trackingNumber) {
       // TO DO - Change to styled alert
-      alert('All inputs are required');
+      swal('All inputs are required');
       return;
     } else {
       dispatch({
@@ -48,7 +48,7 @@ function ShippingInfo() {
       });
 
       // TO DO - Change to styled alert
-      alert('Shipping Successful!');
+      swal("", 'Shipping Successful!', "success");
 
       history.push('/samples');
     }
@@ -56,11 +56,24 @@ function ShippingInfo() {
 
   const continueLaterButton = (event) => {
     event.preventDefault();
-
+    swal({
+      title: "Are you sure?",
+      text: "Sample cannot be processed until shipping information is entered",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("Order not complete", {
+          icon: "warning",
+        });
+        history.push('/samples');
+      } 
+    });
     // TO DO - Change to styled alert
-    alert('Sample cannot be processed until shipping information is entered');
+  
 
-    history.push('/samples');
   }; // end continueLaterButton
 
   return (
