@@ -72,7 +72,8 @@ function AddSample() {
       !lotNumber ||
       !extractionMethod
     ) {
-      alert("Please complete required inputs");
+      swal("Uh oh!", "Please fill out all required fields", "warning");
+
       return;
     }; // end required field check
     history.push('/shipping');
@@ -81,29 +82,51 @@ function AddSample() {
 
   const cancel = (event) => {
     console.log(orderId, "orderId")
+    swal({
+      title: "Are you sure?",
+      text: "Input fields will be cleared and order will be erased",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("Your order has been cancelled", {
+          icon: "success",
+        });
+        setName('');
+        setLotNumber('');
+        setFormat('');
+        setPurity('');
+        setDateManufactured('');
+        setMethod('');
+        setAmount('');
+        setCity('');
+        setState('');
+        setCountry('');
+        setCropStrain('');
+        setHarvestDate('');
+        setSustainability('');
+        // clear the inputs
 
-    dispatch({
-      type: 'DELETE_CURRENT_SAMPLE',
-      payload: {
-        companyID,
-        orderId
+        dispatch({
+          type: 'DELETE_CURRENT_SAMPLE',
+          payload: {
+            companyID,
+            orderId
+            // delete the current sample
+          }
+        });
+      } else {
+        swal("Your order is safe!");
       }
     });
-    // clear the inputs
-    setName('');
-    setLotNumber('');
-    setFormat('');
-    setPurity('');
-    setDateManufactured('');
-    setMethod('');
-    setCity('');
-    setState('');
-    setCountry('');
-    setCropStrain('');
-    setHarvestDate('');
-    setSustainability('');
+    
 
-    // delete the current sample
+   
+ 
+
+  
 
   }; // end cancel
 
