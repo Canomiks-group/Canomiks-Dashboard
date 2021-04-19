@@ -78,6 +78,15 @@ function AddSample() {
   }; // end shipping
 
   const cancel = (event) => {
+    console.log(orderId, "orderId")
+
+    dispatch({
+      type: 'DELETE_CURRENT_SAMPLE',
+      payload: {
+        companyID,
+        orderId
+      }
+    });
     // clear the inputs
     setName('');
     setLotNumber('');
@@ -93,13 +102,6 @@ function AddSample() {
     setSustainability('');
 
     // delete the current sample
-    dispatch({
-      type: 'DELETE_CURRENT_SAMPLE',
-      payload: {
-        companyID,
-        orderId
-      }
-    });
 
   }; // end cancel
 
@@ -107,6 +109,7 @@ function AddSample() {
     // make sure it has a value
   
     // send dispatch with the value
+    
     dispatch({
       type: 'ADD_SAMPLE_INFO',
       payload: {
@@ -115,7 +118,8 @@ function AddSample() {
         companyID,
         orderId
       }
-    }); // end dispatch
+    });
+    // end dispatch
   }; // end focusChange
 
   // text plugged into tooltips

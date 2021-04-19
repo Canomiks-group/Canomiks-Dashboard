@@ -64,6 +64,7 @@ function* addSampleInfo(action) {
 }; // end addSampleInfo
 
 function* deleteCurrentSample (action) {
+  console.log(action.payload, "delete current")
   try {
     const response = yield axios.delete(`/api/orders/deleteSample/${action.payload.companyID}/${action.payload.orderId}`);
   }
