@@ -78,7 +78,7 @@ function AddSample() {
     }; // end required field check
     //swal has blank space to allow icon success
     swal("", "Order successfully saved", "success");
-    history.push('/shipping');
+    history.push('/sample/ship');
   
   }; // end shipping
 
