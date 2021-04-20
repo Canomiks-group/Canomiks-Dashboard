@@ -17,6 +17,7 @@ function handleFinishedUpload (files){
         dispatch({
             type: 'ADD_URL',
             payload: { pdfUrl: files.fileUrl,
+                orderId: 2
               
             },
           });

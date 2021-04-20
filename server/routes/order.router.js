@@ -149,20 +149,20 @@ router.put('/shipping', rejectUnauthenticated, async (req, res) => {
 router.put('/url', rejectUnauthenticated, async (req, res) => {
   try {
     const order = req.body;
-    const orderArray = [ order.pdfUrl, order.companyID,
+    const orderArray = [ order.pdfUrl,
       order.orderId,]
 
     const sqlText = `
       UPDATE "orders"
       SET "pdfUrl" = $1 
-      WHERE "companyID" = $2 AND "id" = $3
+WHERE "id" = $2
       RETURNING *;
     `;
     const dbRes = await pool.query(sqlText, orderArray);
 
     console.log(dbRes.rows);
 
-    if (dbRes.rows.length === 0) {
+   if (dbRes.rows.length === 0) {
       res.sendStatus(404);
       return;
     } else {
@@ -173,7 +173,6 @@ router.put('/url', rejectUnauthenticated, async (req, res) => {
     res.sendStatus(500);
   }
 });
-
 /* DELETE ROUTES */
 router.delete(
   '/delete/:company/:order',
