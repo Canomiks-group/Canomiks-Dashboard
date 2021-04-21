@@ -94,6 +94,7 @@ router.post('/resetPassword', (req, res) => {
 
 router.post('/forgotPassword', async (req, res) => {
   try{
+    console.log('ive made it here')
     // get user info from db that matched the entered email
     const sqlText = `
     SELECT * FROM "users"

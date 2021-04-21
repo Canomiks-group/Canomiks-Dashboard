@@ -27,8 +27,8 @@ function LoginForm() {
 
   const login = (event) => {
     event.preventDefault();
-
     if (email && password) {
+      console.log('function hit in form')
       dispatch({
         type: 'LOGIN',
         payload: {

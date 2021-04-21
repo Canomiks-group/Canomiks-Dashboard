@@ -3,7 +3,9 @@ import axios from 'axios';
 
 // worker Saga: will be fired on "LOGIN" actions
 function* loginUser(action) {
+  console.log('🦋 outside try in saga');
   try {
+    console.log('🦋 inside saga')
     // clear any existing error on the login page
     yield put({ type: 'CLEAR_LOGIN_ERROR' });
 
