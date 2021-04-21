@@ -48,6 +48,36 @@ router.post('/', rejectUnauthenticated, (req, res) => {
   res.sendStatus(200);
 }); // end basic email
 
+router.post('/api/email/delayedStatus', rejectUnauthenticated, async (req, res) => {
+  try {
+    console.log('🦞 the delayedStatus post', req.body);
+    // first update the status in the database
+    const sqlText = `
+      UPDATE "orders"
+      SET "delayed" = $1 
+      WHERE "companyID" = $2 AND "id" = $3
+      RETURNING *;
+    `;
+    const status = [req.body.value, req.body.companyID, req.body.orderId];
+    
+    const dbRes = await pool.query(sqlText, status);
+
+    if (dbRes.rows.length === 0) {
+      res.sendStatus(404);
+      return;
+    } else {
+      res.send(dbRes.rows[0]);
+    }
+    }
+  catch (err) {
+    console.log('💥 error in the delayed status route', err);
+  }
+
+}); // end delayed status route
+
+//   ------------ FORGOT PASSWORD ROUTES ---------
+
+// the forgot password route requires two post routes
 router.post('/resetPassword', (req, res) => {
   // get token
   const theToken = req.body.token;
@@ -58,8 +88,6 @@ router.post('/resetPassword', (req, res) => {
   };
   // id of person changing password, set after verification
   let personId;
-
-  console.log('the token:', theToken);
   // verify that the token is good
   jwt.verify(theToken, process.env.JWT_SECRET, (err, authData) => {
     // check for error and return is so
@@ -90,7 +118,6 @@ router.post('/resetPassword', (req, res) => {
   });
 
 });
-
 
 router.post('/forgotPassword', async (req, res) => {
   try{
@@ -145,5 +172,7 @@ router.post('/forgotPassword', async (req, res) => {
     console.log('💥 something went wrong with the forgot password', err);
   }
 });
+
+// --------- END FORGOT PASSWORD ROUTES ----------
 
 module.exports = router;

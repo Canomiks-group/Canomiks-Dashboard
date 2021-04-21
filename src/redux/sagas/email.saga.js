@@ -9,9 +9,20 @@ function* sendEmail(action) {
   }
 } // end sendEmail
 
+function* emailDelayedStatus (action) {
+  try {
+    console.log("🐳 emailDelayedStatus", action.payload);
+    
+    const response = yield axios.put('/api/email/delayedStatus', action.payload);
+  }
+  catch (err) {
+    console.log('💥 error in the emailDelayedStatus', err);
+  }
+}; // end emailDelayedStatus
+
 function* emailSaga() {
   yield takeLatest('SEND_EMAIL', sendEmail);
-  yield takeLatest('EMAIL_DELAYED_STATUS')
+  yield takeLatest('EMAIL_DELAYED_STATUS', emailDelayedStatus)
 }
 
 export default emailSaga;

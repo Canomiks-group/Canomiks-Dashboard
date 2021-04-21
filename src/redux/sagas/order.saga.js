@@ -79,6 +79,8 @@ function* updateSampleLab(action) {
   try {
     const response = yield axios.put('/api/orders/lab/update', action.payload);
 
+    // here we can send the post for the email
+
     yield put({
       type: 'FETCH_ALL_ORDERS',
     });

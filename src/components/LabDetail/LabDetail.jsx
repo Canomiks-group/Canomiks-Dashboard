@@ -22,8 +22,12 @@ function LabDetail({ setOpenDetail, originalSample }) {
   const markDelay = () => {
     // Dispatch toggles currentSample delayed status
     dispatch({
-      type: 'EDIT_SAMPLE_DELAY', // goes to a saga
-      payload: !currentSample.delayed,
+      type: 'EMAIL_DELAYED_STATUS', // goes to a saga
+      payload: {
+        value: !currentSample.delayed,
+        companyID: currentSample.companyID,
+        orderId: currentSample.id
+      }
     });
   }; // end markDelay
 
