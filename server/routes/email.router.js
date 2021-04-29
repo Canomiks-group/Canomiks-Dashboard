@@ -15,7 +15,7 @@ const nodemailer = require('nodemailer');
 // make the "transporter"
 // this is the email that will do the sending
 const transporter = nodemailer.createTransport({
-  service: process.env.SERVICE_PROVIDER, // make an env file
+  service: 'outlook',
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
@@ -119,9 +119,13 @@ router.post('/resetPassword', (req, res) => {
 
 router.post('/forgotPassword', async (req, res) => {
   try {
+    let hostName = `localhost:3000`;
     // for deployment on heroku ???
-    // put the host name as an enviromnet variable
-    const theHost = process.env.HOST_NAME;
+    if (process.env.DATABASE_URL) {
+      const params = url.parse(process.env.DATABASE_URL);
+      const theHost = req.hostname;
+      hostName = `${theHost}:${params.port}`;
+    }
     // get user info from db that matched the entered email
     const sqlText = `
     SELECT * FROM "users"
@@ -148,7 +152,7 @@ router.post('/forgotPassword', async (req, res) => {
 
     localToken = jwt.sign(payload, secret);
 
-    const link = `${theHost}#/resetPassword/${localToken}/${userInfo.id}`;
+    const link = `http://${hostName}/#/resetPassword/${localToken}/${userInfo.id}`;
 
     // send the email to the users email
     const info = await transporter.sendMail(
